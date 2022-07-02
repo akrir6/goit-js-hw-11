@@ -35,7 +35,8 @@ ul {
 img {
   /* height: auto; */
   display: block;
-
+width: 180px;
+height: 180px;
 }
 
 .country-info-card {
@@ -76,4 +77,11 @@ img {
 
 .country-flag {
   margin-right: 10px;
+}
+
+.gallery {
+  margin: 20px;
+display: flex;
+flex-wrap: wrap;
+
 }
