@@ -5,7 +5,6 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { PixabayAPI } from './pixabayAPI';
-// import { observer } from './infiniteScroll';
 import { galleryRef, renderGallery, clearGalleryMarkup } from './galleryMarkup';
 
 Notify.init({
@@ -19,15 +18,13 @@ const formRef = document.querySelector('.search-form');
 const loadingAnimationRef = document.querySelector('.loading-animation');
 
 formRef.addEventListener('submit', onFormSubmit);
-// loadingAnimationRef.addEventListener('click', onloadMoreBtnClick);
 
 const pixabayAPI = new PixabayAPI();
 
 async function onFormSubmit(e) {
   e.preventDefault();
-  loadingAnimationRef.style.display = 'block';
-  e.target.elements.submitBtn.disabled = true;
-  e.target.elements.searchQuery.disabled = true;
+  showLoading(true);
+  disableFormElements(true);
   clearGalleryMarkup();
   pixabayAPI.resetPage();
   const request = e.target.elements.searchQuery.value.trim();
@@ -36,18 +33,21 @@ async function onFormSubmit(e) {
   pixabayAPI.searchQuery1 = request;
   try {
     const { hits, totalHits } = await pixabayAPI.fetchImages();
-    console.log(hits);
-    if (!totalHits)
+    if (!totalHits) {
+      showLoading(false);
+      disableFormElements(false);
       return Notify.warning(
         'Sorry, there are no images matching your search query. Please try again.'
       );
+    }
+
     Notify.success(`Hooray! We found ${totalHits} images.`);
+
     renderGallery(hits);
     lightbox.refresh();
-    loadingAnimationRef.style.display = 'none';
-    e.target.elements.submitBtn.disabled = false;
-    e.target.elements.searchQuery.disabled = false;
-    observer.observe(document.querySelector('.scroll-guard'));
+    showLoading(false);
+    disableFormElements(false);
+    onScrollLoadding();
   } catch (err) {
     console.log(err.message);
   }
@@ -56,16 +56,10 @@ async function onFormSubmit(e) {
 }
 
 async function onloadMoreBtnClick() {
-  formRef.elements.submitBtn.disabled = true;
-  formRef.elements.searchQuery.disabled = true;
-  loadingAnimationRef.style.display = 'block';
+  showLoading(true);
+  disableFormElements(true);
   try {
     const { hits, totalHits } = await pixabayAPI.fetchImages();
-    if (galleryRef.childElementCount === totalHits) {
-      return Notify.info(
-        "We're sorry, but you've reached the end of search results."
-      );
-    }
 
     renderGallery(hits);
     lightbox.refresh();
@@ -79,12 +73,13 @@ async function onloadMoreBtnClick() {
     //   behavior: 'smooth',
     // });
   } catch (err) {
-    console.log(err.message);
-    console.log(galleryRef.childElementCount);
+    console.log(err);
+    if (err) {
+      Notify.info("We're sorry, but you've reached the end of search results.");
+    }
   }
-  loadingAnimationRef.style.display = 'none';
-  formRef.elements.submitBtn.disabled = false;
-  formRef.elements.searchQuery.disabled = false;
+  showLoading(false);
+  disableFormElements(false);
 }
 
 const lightbox = new SimpleLightbox('.gallery a', {
@@ -92,12 +87,23 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 300,
 });
 
-const observerOptions = { rootMargin: '200px', treshold: 1.0 };
+function onScrollLoadding() {
+  const observerOptions = { rootMargin: '200px', treshold: 1.0 };
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      onloadMoreBtnClick();
-    }
-  });
-}, observerOptions);
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        onloadMoreBtnClick();
+      }
+    });
+  }, observerOptions);
+  observer.observe(document.querySelector('.scroll-guard'));
+}
+function disableFormElements(status) {
+  formRef.elements.submitBtn.disabled = status;
+  formRef.elements.searchQuery.disabled = status;
+}
+
+function showLoading(status) {
+  loadingAnimationRef.style.display = status ? 'block' : 'none';
+}
