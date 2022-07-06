@@ -60,7 +60,10 @@ async function onloadMoreBtnClick() {
   disableFormElements(true);
   try {
     const { hits, totalHits } = await pixabayAPI.fetchImages();
-
+    console.log(galleryRef.childElementCount, totalHits);
+    if (galleryRef.childElementCount >= totalHits) {
+      Notify.info("We're sorry, but you've reached the end of search results.");
+    }
     renderGallery(hits);
     lightbox.refresh();
 
@@ -73,10 +76,7 @@ async function onloadMoreBtnClick() {
     //   behavior: 'smooth',
     // });
   } catch (err) {
-    console.log(err);
-    if (err) {
-      Notify.info("We're sorry, but you've reached the end of search results.");
-    }
+    console.log(err.message);
   }
   showLoading(false);
   disableFormElements(false);
