@@ -54,6 +54,7 @@ async function loadImages() {
     if (!totalHits) {
       onFinishLoadingImages();
       formRef.reset();
+      loadMoreBtn.style.display = 'none';
       return Notify.warning(
         'Sorry, there are no images matching your search query. Please try again.'
       );
@@ -75,6 +76,14 @@ async function loadImages() {
 
     renderGallery(hits);
     lightbox.refresh();
+
+    const { height: cardHeight } =
+      galleryRef.firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: 'smooth',
+    });
   } catch (err) {
     console.log(err.message);
     if (err.message === 'Request failed with status code 400') {
@@ -98,13 +107,6 @@ function onFinishLoadingImages() {
   formRef.elements.submitBtn.disabled = false;
   formRef.elements.searchQuery.disabled = false;
   loadMoreBtn.disabled = false;
-  const { height: cardHeight } =
-    galleryRef.firstElementChild.getBoundingClientRect();
-
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
 }
 
 function onloadMoreBtnClick() {

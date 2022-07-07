@@ -78,8 +78,12 @@ ul {
 
 
 .search-form {
+
+  
   position: fixed;
   display: flex;
+
+
   justify-content: center;
   top: 0px;
   left: 0px;
@@ -91,6 +95,16 @@ ul {
   background-color: #b1b1b1;
   border-bottom: 1px solid #606060;
 }
+@media screen and (max-width: 600px) {
+  .search-form {justify-content:start;}
+ .search-form input {width: 100px;}
+ .loading-method{
+  font-size: x-small;
+height: 40px;
+width: 80px;
+}
+}
+
 
 
 .search-form input {
