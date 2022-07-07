@@ -20,10 +20,11 @@ export class PixabayAPI {
       page: this.page,
       per_page: 40,
     });
-
-    const { data } = await axios.get(`?${params}`);
-    this.incrementPage();
-    return data;
+    if (this.#searchQuery) {
+      const { data } = await axios.get(`?${params}`);
+      this.incrementPage();
+      return data;
+    }
   }
 
   get searchQuery() {
