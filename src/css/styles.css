@@ -33,13 +33,14 @@ ul {
   margin-top: 80px;
   margin-left: 1rem;
   margin-right: 1rem;
-  /* margin-bottom: 80px;
-  display: block;
+  /* margin-bottom: 80px; */
+  /* display: block;
   columns: 20rem; */
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-  gap: 1rem;
+  column-gap: 1rem;
+  align-items: center;
 }
 
 .gallery img {
@@ -128,7 +129,7 @@ ul {
   border-color: #212121;
 }
 
-.loading-animation {
+/* .loading-animation {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -140,5 +141,5 @@ ul {
   background-color: #606060;
   border: 1px solid #212121;
   border-radius: 8px;
-}
+} */
 

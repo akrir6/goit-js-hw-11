@@ -13,7 +13,7 @@ function makeGallaryMarkup(searchedImages) {
         downloads,
       }) => `<div class="photo-card">
         <a href="${largeImageURL}">
-        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" /> 
               <div class="info">
                 <p class="info-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
