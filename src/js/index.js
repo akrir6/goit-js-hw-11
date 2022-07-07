@@ -125,7 +125,7 @@ function onloadingMethodBtnClick() {
     loadingMethodBtn.setAttribute('data-method', 'button');
     loadingMethodBtn.textContent = 'Use infinite scroll';
     observer.disconnect();
-    if (pixabayAPI.searchQuery) {
+    if (galleryRef.childElementCount) {
       loadMoreBtn.style.display = 'block';
     }
   }
