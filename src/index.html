@@ -14,7 +14,7 @@
         autocomplete="off"
         placeholder="Search images..."
       />
-      <button type="submit" name="submitBtn">
+      <button type="submit" name="submitBtn" class="submit-button">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -28,14 +28,13 @@
           />
         </svg>
       </button>
+      <button type="button" class="loading-method" data-method="button">
+        Use infinite scroll
+      </button>
     </form>
 
     <div class="gallery"></div>
-    <!-- <button type="button" class="load-more"></button> -->
-
-    <!-- <div class="loading-animation" style="display: none">
-      <img src="./images/loading.gif" alt="loding..." />
-    </div> -->
+    <button type="button" class="load-more">Load more</button>
 
     <div class="scroll-guard"></div>
     <script src="./js/index.js" type="module"></script>

@@ -109,7 +109,7 @@ ul {
   border-color: #212121;
 }
 
-.search-form button {
+.submit-button {
   margin-left: 2;
   padding: 4px;
   height: 40px;
@@ -123,23 +123,58 @@ ul {
   cursor: pointer;
 }
 
-.search-form button:not(:disabled):hover,
-.search-form button:focus {
+.submit-button:not(:disabled):hover,
+.submit-button:focus {
   background-color: #cacaca;
   border-color: #212121;
 }
 
-/* .loading-animation {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 25px;
-  height: 99px;
-  width: 99px;
-   
+
+.load-more {
+  display: none;
+  margin-bottom: 1rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
+
+  padding: 4px 8px 4px 8px;
+  height: 40px;
+  
   background-color: #606060;
   border: 1px solid #212121;
-  border-radius: 8px;
-} */
+  border-radius: 8px 8px;
+  font-size: larger;
 
+  outline: none;
+  cursor: pointer;
+}
+
+.load-more:not(:disabled):hover,
+.load-more:focus {
+  background-color: #cacaca;
+  border-color: #212121;
+}
+
+
+
+.loading-method {
+position: absolute;
+  top: 15px;
+  right: 1rem;
+
+  padding: 4px 8px 4px 8px;
+    height: 30px;
+    
+    background: transparent;
+    border: 1px solid #606060;
+    border-radius: 8px;
+    /* font-size: larger; */
+  
+    outline: none;
+    cursor: pointer;
+}
+
+.loading-method:not(:disabled):hover,
+.loading-method:focus {
+  background-color: #cacaca;
+  border-color: #212121;
+}
